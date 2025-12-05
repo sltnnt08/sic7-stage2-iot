@@ -14,7 +14,7 @@ MQTT_BROKER = "broker.hivemq.com"
 MQTT_PORT = 1883
 TOPIC_SENSOR = "sic7/sensor"      # Subscribe: receive sensor data from ESP32
 TOPIC_CONTROL = "sic7/control"    # Publish: send control commands to ESP32
-CLIENT_ID = "mqttx_22adfc93 x"
+CLIENT_ID = "mqttx_22adfc93"
 MQTT_USER = "foursome"
 MQTT_PASS = "berempat"
 

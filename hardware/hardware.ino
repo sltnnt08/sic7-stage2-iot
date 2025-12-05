@@ -18,8 +18,8 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 DHT dht(DHTPIN, DHTTYPE);
 
 // WiFi & MQTT
-const char* ssid = "KKTBSYS";
-const char* password = "unidentified";
+const char* ssid = "SISWA NESKAR";
+const char* password = "siswa@neskar";
 const char* mqtt_server = "broker.hivemq.com";
 const int mqtt_port = 1883;
 // Jika broker butuh auth, isi; kalau tidak bisa dibiarkan kosong
