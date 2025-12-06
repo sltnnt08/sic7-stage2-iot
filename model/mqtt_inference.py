@@ -9,21 +9,17 @@ import paho.mqtt.client as mqtt
 # ===============================
 # Configuration
 # ===============================
-MODEL_PATH = "model/models/best_model.pkl"
+MODEL_PATH = "model/models/model_random_forest.pkl"
 MQTT_BROKER = "broker.hivemq.com"
 MQTT_PORT = 1883
 TOPIC_SENSOR = "sic7/sensor"      # Subscribe: receive sensor data from ESP32
 TOPIC_CONTROL = "sic7/control"    # Publish: send control commands to ESP32
-CLIENT_ID = "mqttx_22adfc93"
+CLIENT_ID = f"inference_server_{int(time.time())}"
 MQTT_USER = "foursome"
 MQTT_PASS = "berempat"
 
-# Mapping label to control commands
-COMMAND_MAP = {
-    'Panas': ['red:on', 'buzzer:on', 'green:off', 'yellow:off'],
-    'Normal': ['green:on', 'red:off', 'yellow:off', 'buzzer:off'],
-    'Dingin': ['yellow:on', 'red:off', 'green:off', 'buzzer:off']
-}
+# Mapping not needed anymore - ESP32 handles LED control
+# We only send status, ESP32 decides what LED to turn on
 
 # ===============================
 # Load ML Model
@@ -73,17 +69,10 @@ def on_message(client, userdata, msg):
         
         print(f"🤖 Prediction: {prediction}")
         
-        # Publish status to OLED display
+        # Publish status only - ESP32 will handle LED control automatically
         status_msg = f"status:{prediction}"
         client.publish(TOPIC_CONTROL, status_msg)
-        print(f"📤 Published: {status_msg}")
-        
-        # Publish control commands based on prediction
-        commands = COMMAND_MAP.get(prediction, [])
-        for cmd in commands:
-            client.publish(TOPIC_CONTROL, cmd)
-            print(f"📤 Published: {cmd}")
-            time.sleep(0.1)  # Small delay between commands
+        print(f"📤 Published: {status_msg} → ESP32 will auto-control LEDs")
         
         print("-" * 60)
         
