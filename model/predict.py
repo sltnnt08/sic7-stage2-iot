@@ -3,7 +3,7 @@ import sys
 import joblib
 import numpy as np
 
-MODEL_PATH = "model/models/best_model.pkl"
+MODEL_PATH = "model/models/model_random_forest.pkl"
 
 def load_model():
     if not os.path.exists(MODEL_PATH):

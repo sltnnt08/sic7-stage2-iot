@@ -7,7 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
-DATASET_PATH = "model/dataset/dummy.csv"
+DATASET_PATH = "model/dataset/preprocessed_data.csv"
 MODEL_DIR = "model/models"
 
 os.makedirs(MODEL_DIR, exist_ok=True)
@@ -47,12 +47,6 @@ def evaluate_models(models, X_test, y_test):
 
     return accuracies
 
-def save_best_model(models, accuracies):
-    best_name = max(accuracies, key=accuracies.get)
-    best_model = models[best_name]
-    joblib.dump(best_model, f"{MODEL_DIR}/best_model.pkl")
-    print(f"\n🏆 Best model: {best_name} (accuracy={accuracies[best_name]})")
-    print("Saved as best_model.pkl")
 
 def main():
     df = load_dataset()
@@ -65,7 +59,6 @@ def main():
 
     models = train_models(X_train, y_train)
     accuracies = evaluate_models(models, X_test, y_test)
-    save_best_model(models, accuracies)
 
     print("\nTraining completed.")
 
